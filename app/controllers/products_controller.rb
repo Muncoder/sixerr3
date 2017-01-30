@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
 	before_action :find_product, except: [:index, :new, :create, :my_products ]
 
 	def index
-		@products = Product.all.order("created_at DESC")
+		@products = Product.paginate(:page => params[:page]).order("created_at DESC")
 	end
 
 	def new
@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
 	end
 
 	def my_products
-		@products = current_user.products
+		@products = current_user.products.paginate(:page => params[:page]).order("created_at DESC")
 	end
 
 	private

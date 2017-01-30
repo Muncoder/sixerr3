@@ -2,6 +2,8 @@
 
 	<h1>My Products</h1>	
 	<hr>
+	<%= will_paginate @products, renderer: BootstrapPagination::Rails %>
+	
 	<%= render "products" %>
 
 	<%= link_to "New Product", new_product_path, class: "btn btn-primary" %>	

@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
+
 	has_attached_file :image, styles: { medium: "150x150>", thumb: "100x100>" }
   	validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
@@ -7,5 +8,8 @@ class Product < ActiveRecord::Base
  	validates :price, presence: true
  	validates_numericality_of :price
 
+ 	self.per_page = 3
+
  	belongs_to :user
+
 end
