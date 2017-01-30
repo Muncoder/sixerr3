@@ -12,4 +12,8 @@ class Product < ActiveRecord::Base
 
  	belongs_to :user
 
+ 	def short_description
+ 		description.length > 130 ? description[0..130] + "..." : description
+ 	end
+ 	
 end

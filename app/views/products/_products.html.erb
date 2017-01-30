@@ -8,7 +8,12 @@
 						<% if product.image %>
 							<%= image_tag(product.image.url(:medium)) %>						
 						<% end %>
-						<p class="product_description"><%= product.description %></p>
+						<p class="product_description">
+							<%= product.short_description %>
+							<% if product.description.length > 130 %>
+								<%= link_to "view more >>", product_path(product) %>
+							<% end %>
+						</p>
 						<p><%= product.price %></p>
 						<hr>
 						<% if current_user && product.user_id == current_user.id %>
