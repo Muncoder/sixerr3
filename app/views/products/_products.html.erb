@@ -16,6 +16,8 @@
 						</p>
 						<p><%= product.price %></p>
 						<hr>
+						<%= link_to "Show", product_path(product), class: "btn btn-primary btn-xs" %> 
+
 						<% if current_user && product.user_id == current_user.id %>
 							<%= link_to "Edit", edit_product_path(product), class: "btn btn-info btn-xs" %>
 						<% end %>
