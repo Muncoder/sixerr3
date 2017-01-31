@@ -11,11 +11,64 @@
 		</div>
 		<div class="col-md-4">
 			<div class="well">
-				<%= link_to "Order Now", root_path, class: "btn btn-block btn-info" %>	
+
+				<%= form_tag charges_path, id: 'chargeForm' do %>
+				  <article>
+				    <% if flash[:error].present? %>
+				      <div id="error_explanation">
+				        <p><%= flash[:error] %></p>
+				      </div>
+				    <% end %>
+				  </article>
+
+				  <script src="https://checkout.stripe.com/checkout.js"></script>
+					
+					<%= hidden_field_tag 'stripeToken' %>
+					<%= hidden_field_tag 'stripeEmail' %>
+					<%= hidden_field_tag 'product_id', @product.id %>
+					<%= hidden_field_tag 'description', @product.description %>
+					<%= hidden_field_tag 'price', @product.price %>
+					<%= hidden_field_tag 'total_price', {id: "total_price"} %>
+
+
+				<button type="button" id="btn-order" class="btn btn-block btn-info btn-order">
+					Order Now-(<%= @product.price %>)
+				</button>
+
+				<script type="text/javascript">
+					var handler = StripeCheckout.configure({
+						key: '<%= Rails.configuration.stripe[:publishable_key] %>',
+						token: function(token, arg) {
+							document.getElementById("stripeToken").value = token.id,
+							document.getElementById("stripeEmail").value = token.email,
+							document.getElementById("chargeForm").submit();
+						}
+					});
+
+					document.getElementById("btn-order").addEventListener('click', function(e){
+						var quantity = $('#quantity').val();
+						var total_price = (quantity * "<%= @product.price %>") + "00";
+						$('#total_price').val(total_price);
+						handler.open({
+							name: "Sixerr3",
+							description: "<%= @product.description %>",
+							amount: total_price
+						});
+						e.preventDefault();
+					});
+				</script>
+
 				<hr>
 				Select Quantity: 
+				<%= select_tag(:quantity, options_for_select([
+					["1 (£#{@product.price * 1})", 1],	
+					["2 (£#{@product.price * 2})", 2],	
+					["3 (£#{@product.price * 3})", 3],	
+					["4 (£#{@product.price * 4})", 4],	
+					["5 (£#{@product.price * 5})", 5]	
+					])) %>
+				<% end %>
 			</div>
-			
 		</div>
 	</div>
 	
@@ -23,3 +76,11 @@
 	</p>
 
 </div>
+
+<script>
+	$(document).ready(function(){
+		$("select").bind("change", function(){
+			$('.btn-order').html("Order Now - " + $("select option:selected").html());
+		});
+	})
+</script>

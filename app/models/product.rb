@@ -11,6 +11,7 @@ class Product < ActiveRecord::Base
  	self.per_page = 3
 
  	belongs_to :user
+ 	has_many :orders
 
  	def short_description
  		description.length > 130 ? description[0..130] + "..." : description

@@ -8,4 +8,6 @@ Rails.application.routes.draw do
 
   get "my_products" => "products#my_products"
 
+  resources :charges, only:[:new, :create]
+
 end
