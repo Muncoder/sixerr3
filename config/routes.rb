@@ -10,4 +10,7 @@ Rails.application.routes.draw do
 
   resources :charges, only:[:new, :create]
 
+  get "sales" => "products#sales"
+  get "purchases" => "products#purchases"
+
 end

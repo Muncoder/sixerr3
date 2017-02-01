@@ -1,0 +1,30 @@
+<div class="container">
+	<h1>My Purchases</h1>
+	<hr>
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Imange</th>
+				<th>Name</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Total Price</th>
+				<th>Date Purchased</th>
+				<th>Seller</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @orders.each do |order| %>
+				<tr>
+					<td><%= image_tag(order.product.image.url(:medium)) %></td>
+					<td><%= order.product.name %></td>
+					<td><%= order.quantity %></td>
+					<td><%= order.price %></td>
+					<td><%= order.total_price %></td>
+					<td><%= order.created_at %></td>
+					<td><%= order.product.user.email %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>	
+</div>

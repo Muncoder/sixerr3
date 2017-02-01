@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
 	before_action :authenticate_user!, only: [:new, :create, :edit, :update, :my_products]
-	before_action :find_product, except: [:index, :new, :create, :my_products ]
+	before_action :find_product, except: [:index, :new, :create, :my_products, :sales, :purchases ]
 
 	def index
 		@products = Product.paginate(:page => params[:page]).order("created_at DESC")
@@ -45,6 +45,14 @@ class ProductsController < ApplicationController
 
 	def my_products
 		@products = current_user.products.paginate(:page => params[:page]).order("created_at DESC")
+	end
+
+	def sales
+		@products = current_user.products
+	end
+
+	def purchases
+		@orders = current_user.orders
 	end
 
 	private
