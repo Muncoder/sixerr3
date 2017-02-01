@@ -12,5 +12,6 @@ Rails.application.routes.draw do
 
   get "sales" => "products#sales"
   get "purchases" => "products#purchases"
+  get "search" => "pages#search"
 
 end
