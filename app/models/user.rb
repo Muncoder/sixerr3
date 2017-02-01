@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :orders
 
+  def full_name
+  	first_name + " " + last_name
+  end
+
 end
