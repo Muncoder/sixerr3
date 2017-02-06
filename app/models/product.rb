@@ -12,6 +12,7 @@ class Product < ActiveRecord::Base
 
  	belongs_to :user
  	has_many :orders
+ 	has_many :reviews
 
  	def short_description
  		description.length > 130 ? description[0..130] + "..." : description
@@ -20,5 +21,14 @@ class Product < ActiveRecord::Base
  	def self.search(query)
  		where("name LIKE ? OR description LIKE ?", "%#{query}%", "%#{query}%")
  	end
+
+ 	def user_has_order?(user)
+ 		orders.map(&:user).include?(user)
+ 	end
+
+ 	def is_reviewed?(user)
+ 		reviews.map(&:user).include?(user)
+ 	end
+
  	
 end

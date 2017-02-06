@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   root "pages#home"
 
-  resources :products
+  resources :products do
+  	resources :reviews, only: [ :create, :destroy ]
+  end
 
   get "my_products" => "products#my_products"
 

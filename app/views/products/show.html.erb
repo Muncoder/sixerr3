@@ -72,8 +72,42 @@
 		</div>
 	</div>
 	
-	<p>
-	</p>
+	<div class="row">
+		
+		<h2>Reviews</h2>
+
+		<% @reviews.each do |review| %>
+			<div class="row">
+				<div class="col-md-1">
+					<%= image_tag avatar_url(review.user), class: "img-circle" %>
+				</div>
+
+				<div class="col-md-2">
+					<div id="review_star_<%= review.star %>"></div>
+				</div>
+
+				<div class="col-md-4">
+					<%= review.comment %>
+				</div>
+
+				<div class="col-md-1">
+					<%= link_to "Delete", product_review_path(@product, review), method: :delete, data: {confirm: "Sure to delete?"}, class: "btn btn-xs btn-danger" %>
+				</div>
+			</div>
+
+			<script>
+				$('#review_star_<%= review.star %>').raty({
+					path: '/assets',
+					score: <%= review.star %>,
+					readOnly: true
+				});
+			</script>
+
+		<% end %>
+
+		<%= render "reviews/form" if @product.user_has_order?(current_user) && !@product.is_reviewed?(current_user) %>
+
+	</div>
 
 </div>
 
@@ -81,6 +115,12 @@
 	$(document).ready(function(){
 		$("select").bind("change", function(){
 			$('.btn-order').html("Order Now - " + $("select option:selected").html());
+		});
+
+		$('#star_input').raty({
+			path: '/assets',
+			score: 1,
+			scoreName: 'review[star]'
 		});
 	})
 </script>
