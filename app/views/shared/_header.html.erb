@@ -43,6 +43,10 @@
         <%= submit_tag "Submit", class: "btn btn-default" %>
       <% end %>
 
+      <div class="nav navbar-nav">
+        <%= link_to "Contact Us", new_contact_path, class: "btn btn-primary navbar-btn" %>
+      </div>
+
       <ul class="nav navbar-nav navbar-right">
         <% if !user_signed_in? %>
           <li><%= link_to "Sign In", new_user_session_path %></li>
@@ -61,6 +65,7 @@
           </li>
         <% end %>
       </ul>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

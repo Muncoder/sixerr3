@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   get "purchases" => "products#purchases"
   get "search" => "pages#search"
 
+  resources :contacts, only: [:new, :create]
+
 end
